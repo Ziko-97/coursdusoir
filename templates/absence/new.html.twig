@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+{% block title %}New Absence{% endblock %}
+
+{% block body %}
+    <h1>Ajouter Absence</h1>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+  {% if eleves|length == 0 %}
+
+       
+          <tr>
+                <td colspan="5">no records found</td>
+          </tr>
+  {% else %}
+	   	
+   <table class="table">
+        <thead>
+            {#<tr>
+               <th>Nom{{nn['date']| date('d/m/Y')}}</th>
+                <th>Prénom{{nn['matiere']}}</th>
+                <th>Niveau{{nn['niveau'].niveau}}</th>
+                <th>Reste à payer</th>
+                <th>Présent/Absent</th>
+            </tr>
+            #}
+            <tr>
+               <th>Nom</th>
+                <th>Prénom</th>
+                <th>Niveau</th>
+                <th>Reste à payer</th>
+                <th>Présent/Absent</th>
+            </tr>
+           
+        </thead>
+          {{ form_end(form) }}
+
+       <tbody>
+        {% for eleve in eleves %}
+
+            <tr>
+              
+                <td>{{ eleve.nom }}</td>
+                <td>{{ eleve.prenom }}</td>
+                <td>{{ eleve.niveau }}</td>
+                <td></td>
+               <td>
+                    <label for="id">Présent</label>
+                <input name="{{ loop.index }}" type="checkbox" for="id">
+                </td>
+            </tr>
+        {% endfor %}
+        
+
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+                        <td></td>
+
+            <td>
+            {{ form_start(form2) }}
+            <label for="id">Tout est Présent</label>
+             <input name="All" type="checkbox" for="id"><br><br>
+             {{ form_widget(form2) }}
+               
+
+                 {{ form_end(form2) }}
+                 {{ form_end(form) }}
+
+
+                {#{ form(form2)}}#}
+                
+</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+    <!--<input type="submit" value="Tout est pésent">-->
+            {{ form_end(form) }}
+
+    
+    
+    <a href="{{ path('absence_index') }}">back to list</a>
+{% endblock %}

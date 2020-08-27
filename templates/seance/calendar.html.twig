@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div style="margin-top:100px;"></div>
+    <a href="{{ path('seance_new') }}">Creer une nouvelle seance</a>
+
+    <div id="calendar-holder"></div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{  parent() }}
+
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+
+    <script type="text/javascript">
+        window.onload= () => {
+            var calendarEl = document.getElementById('calendar-holder');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                defaultView: 'dayGridMonth',
+                locale:'fr',
+                events :  {{ data|raw }},
+                editable: true,
+                eventResizableFromStart:true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                },
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+                timeZone: 'UTC',
+
+            });
+            calendar.on('eventClick', (e)=>{
+                console.log(e);
+                    /*let url=`/api/${e.event.id}/edit`
+                        let donnees={
+                                "title":e.event.title,
+                                "description":e.event.extendedProps.description,
+                                "start":e.event.start,
+                                "end":e.event.end
+                        }
+                        let xhr= new XMLHttpRequest
+                        xhr.open("PUT",url)
+                        xhr.send(JSON.stringify(donnees))*/
+            });
+            calendar.render();
+        };
+    </script>
+{% endblock %}

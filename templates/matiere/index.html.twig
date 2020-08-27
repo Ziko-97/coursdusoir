@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matiere index{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <h1 style="margin-top:100px;">Matiere index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdMatiere</th>
+                <th>NomMatiere</th>
+                <th>Niveau</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matiere in matieres %}
+            <tr>
+                <td>{{ matiere.idMatiere }}</td>
+                <td>{{ matiere.nomMatiere }}</td>
+                <td>{{ matiere.niveau }}</td>
+                <td>{{ matiere.prix }}</td>
+                <td>
+                    <a href="{{ path('matiere_show', {'idMatiere': matiere.idMatiere}) }}">show</a>
+                    <a href="{{ path('matiere_edit', {'idMatiere': matiere.idMatiere}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('matiere_new') }}">Create new</a>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/tether.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/shepherd.min.js') }}"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
+    <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/components.js') }}"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <!--<script src="{{ asset('app-assets/js/scripts/pages/dashboard-analytics.js') }}"></script>-->
+    <!-- END: Page JS-->
+{% endblock %}
